@@ -1,3 +1,9 @@
+package ui;
+
+import form.NewMemberForm;
+import model.Member;
+import service.MemberService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,7 +25,7 @@ public class MemberMenu extends MenuBar {
         addButton("Alla medlemar", () -> userinterface.createTable(memberService.getAllMembers()));
         //text fält för att söka efter medlem
         textField = new JTextField("Sök medlem...",20);
-        //appenchild till Jpanel panel som är ett attribut kopplat till MenuBar
+        //appenchild till Jpanel panel som är ett attribut kopplat till ui.MenuBar
         panel.add(textField);
         //createtable i ui tar bara emot arraylist
         //searchmember i repo returnar endast 1 member objekt(email-unique)

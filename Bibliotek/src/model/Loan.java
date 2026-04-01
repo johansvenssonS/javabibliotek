@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 public class Loan implements TableRow {
@@ -63,7 +65,7 @@ public class Loan implements TableRow {
 
     @Override
     public String toString() {
-        return "Loan{" +
+        return "model.Loan{" +
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", memberId=" + memberId +
@@ -72,7 +74,7 @@ public class Loan implements TableRow {
     }
     @Override
     public  String[] getColumnNamn(){
-        return new String[]{"Lån-id", "Bok-id", "Member-id",
+        return new String[]{"Lån-id", "Bok-id", "model.Member-id",
                 "Utlåningsdatum", "Inlämingsdatum", "Inlämnatdatum", "Status"};
     }
     @Override

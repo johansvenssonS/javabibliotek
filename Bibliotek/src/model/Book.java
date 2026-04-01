@@ -1,3 +1,5 @@
+package model;
+
 public class Book implements TableRow {
     private String title;
     private int yearPublished;
@@ -75,7 +77,7 @@ public class Book implements TableRow {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "model.Book{" +
                 "title='" + title + '\'' +
                 ", yearPublished=" + yearPublished +
                 ", availableCopies=" + availableCopies +

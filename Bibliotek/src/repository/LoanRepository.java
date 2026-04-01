@@ -1,3 +1,7 @@
+package repository;
+
+import model.Loan;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;

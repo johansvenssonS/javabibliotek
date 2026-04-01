@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package controller;
+
 import java.util.Scanner;
 
 public class MainController {

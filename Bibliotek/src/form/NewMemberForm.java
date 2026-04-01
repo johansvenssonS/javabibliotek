@@ -1,8 +1,13 @@
+package form;
+
+import model.Member;
+import service.MemberService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
-//String firstName, String lastName, Member.MemberStatus status, Member.MembershipType membership_type, Date membership_date, String email
+//String firstName, String lastName, model.Member.model.Member.MemberStatus status, model.Member.model.Member.MembershipType membership_type, Date membership_date, String email
 public class NewMemberForm implements InputForm {
     private MemberService memberService;
     private JTextField firstName;

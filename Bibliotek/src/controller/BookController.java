@@ -1,4 +1,7 @@
-//meny
+package controller;//meny
+
+import model.Book;
+import service.BookService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +17,7 @@ public class BookController {
         boolean active = true;
 
         while(active){
-            System.out.println("----Book menu----");
+            System.out.println("----model.Book menu----");
             System.out.println("1. Show all books");
             System.out.println("2. Show all available books");
             System.out.println("3. Search books");

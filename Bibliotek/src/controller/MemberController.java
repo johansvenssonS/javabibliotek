@@ -1,3 +1,8 @@
+package controller;
+
+import model.Member;
+import service.MemberService;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -14,10 +19,10 @@ public class MemberController {
             boolean active = true;
 
             while(active){
-                System.out.println("----Member menu----");
+                System.out.println("----model.Member menu----");
                 System.out.println("1. Show all Members");
                 System.out.println("2. Search by Email");
-                System.out.println("3. Create new Member");
+                System.out.println("3. Create new model.Member");
                 System.out.println("0. Exit");
                 int choice = scanner.nextInt();
                 switch (choice){

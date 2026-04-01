@@ -1,4 +1,6 @@
-//databas interaktion
+package repository;//databas interaktion
+
+import model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
+package ui;
+
 import javax.swing.*;
-import java.awt.*;
 /// Menybar som ska återanvändas i book,loan,member osv
 public abstract class MenuBar {
     //Panel som menybaren ska va i.

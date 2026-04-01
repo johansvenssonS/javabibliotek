@@ -1,5 +1,9 @@
+package controller;
+
+import model.Loan;
+import service.LoanService;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class LoanController {
@@ -13,10 +17,10 @@ public class LoanController {
         boolean active = true;
 
         while (active) {
-            System.out.println("----Loan menu----");
+            System.out.println("----model.Loan menu----");
             System.out.println("1. Show all Loans");
             System.out.println("2. Show active Loans");
-            System.out.println("3. Create a Loan");
+            System.out.println("3. Create a model.Loan");
             System.out.println("4. Return a book");
             System.out.println("5. See if loan isActive");
             System.out.println("0. Exit");

@@ -1,3 +1,8 @@
+package service;
+
+import model.Member;
+import repository.MemberRepository;
+
 import java.util.ArrayList;
 import java.util.Date;
 

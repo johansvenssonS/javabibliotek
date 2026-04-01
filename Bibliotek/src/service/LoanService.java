@@ -1,5 +1,9 @@
+package service;
+
+import model.Loan;
+import repository.LoanRepository;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 public class LoanService {
     LoanRepository loanRepository = new LoanRepository();

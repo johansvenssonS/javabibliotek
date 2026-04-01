@@ -1,7 +1,11 @@
+package form;
+
+import service.LoanService;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class NewLoanForm implements InputForm{
+public class NewLoanForm implements InputForm {
     private LoanService loanService;
     private JTextField bookId;
     private JTextField memberId;
@@ -21,7 +25,7 @@ public class NewLoanForm implements InputForm{
         memberId = new JTextField();
         status = new JTextField();
         panel.add(new JLabel("Ange Bok-ID")); panel.add(bookId);
-        panel.add(new JLabel("Ange Member-ID")); panel.add(memberId);
+        panel.add(new JLabel("Ange model.Member.model.Member-ID")); panel.add(memberId);
         panel.add(new JLabel("Ange Status")); panel.add(status);
         return panel;
     }

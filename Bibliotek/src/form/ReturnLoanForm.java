@@ -1,3 +1,7 @@
+package form;
+
+import service.LoanService;
+
 import javax.swing.*;
 import java.awt.*;
 

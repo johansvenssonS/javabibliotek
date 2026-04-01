@@ -1,3 +1,10 @@
+package ui;
+
+import form.InputForm;
+import model.TableRow;
+import service.BookService;
+import service.LoanService;
+import service.MemberService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +45,7 @@ public class Userinterface {
     }
     public void createTopBody(){
         //Skapa en instans av bookmenu som ärver av menubar.
-        //Skicka med this, alltså instansen av Userinterface.
+        //Skicka med this, alltså instansen av ui.Userinterface.
         BookMenu bookMenu = new BookMenu(bookService, this);
         LoanMenu loanMenu = new LoanMenu(loanService, this);
         MemberMenu memberMenu = new MemberMenu(memberService, this);

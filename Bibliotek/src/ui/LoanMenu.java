@@ -1,6 +1,10 @@
-import javax.swing.*;
+package ui;
+
+import form.NewLoanForm;
+import form.ReturnLoanForm;
+import service.LoanService;
+
 import java.awt.*;
-import java.util.ArrayList;
 
 public class LoanMenu extends MenuBar {
     private LoanService loanService;

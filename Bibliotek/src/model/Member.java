@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 public class Member implements TableRow {
@@ -79,7 +81,7 @@ public class Member implements TableRow {
 
     @Override
     public String toString() {
-        return "Member{" +
+        return "model.Member{" +
                 "id=" + id +
                 ", firstname='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

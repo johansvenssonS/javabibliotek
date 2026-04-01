@@ -1,6 +1,9 @@
+package ui;
+
+import service.BookService;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class BookMenu extends MenuBar {
     private JTextField textField;
@@ -22,7 +25,7 @@ public class BookMenu extends MenuBar {
         addButton("Tillgängliga böcker", () -> userinterface.createTable(bookService.getAvailableBooks()));
         addButton("Alla böcker", () -> userinterface.createTable(bookService.getAllBooks()));
         textField = new JTextField("Sök bok...",20);
-        //appenchild till Jpanel panel som är ett attribut kopplat till MenuBar
+        //appenchild till Jpanel panel som är ett attribut kopplat till ui.MenuBar
         panel.add(textField);
         addButton("Sök bok", () -> userinterface.createTable(bookService.searchBooks(textField.getText())));
 
