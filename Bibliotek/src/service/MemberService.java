@@ -20,4 +20,7 @@ public class MemberService {
         return memberRepository.createMember(firstName, lastName, status, membership_type, membership_date, email);
 
     }
+    public boolean memberLogin(String member_email){
+        return memberRepository.login(member_email);
+    }
 }

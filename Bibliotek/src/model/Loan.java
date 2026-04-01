@@ -74,7 +74,7 @@ public class Loan implements TableRow {
     }
     @Override
     public  String[] getColumnNamn(){
-        return new String[]{"Lån-id", "Bok-id", "model.Member-id",
+        return new String[]{"Lån-id", "Bok-id", "Medlems-id",
                 "Utlåningsdatum", "Inlämingsdatum", "Inlämnatdatum", "Status"};
     }
     @Override

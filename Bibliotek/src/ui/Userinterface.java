@@ -1,6 +1,8 @@
 package ui;
 
 import form.InputForm;
+import form.LoginForm;
+import form.NewLoanForm;
 import model.TableRow;
 import service.BookService;
 import service.LoanService;
@@ -20,13 +22,15 @@ public class Userinterface {
     private LoanService loanService;
     private MemberService memberService;
     private DefaultTableModel tableModel;
-
+    private  InputForm LoginForm;
 
     public Userinterface(){
         //Skapa instans av service lager, db-koppling
         bookService = new BookService();
         loanService = new LoanService();
         memberService = new MemberService();
+
+
         //skapa programfönster med titel.
         frame = new JFrame("Biblioteksystem");
         //sätt dimensioner på programfönster.
@@ -34,6 +38,9 @@ public class Userinterface {
         //delas in i zooner tydligen, norr,center ,south osv.
         frame.setLayout(new BorderLayout()); // layout för swing
         //Bygger topmenyn med knapparna.
+
+
+        createInputWindow(new LoginForm(memberService));
         createTopBody();
         //appenda till programfönster(appendchild?)
         //NORTh lägger elementet högst upp ^

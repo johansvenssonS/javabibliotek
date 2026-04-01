@@ -93,4 +93,23 @@ public class MemberRepository extends Repository {
             }
             return -1;
         }
+        public boolean login(String member_email){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM members m \n"+
+                         "WHERE m.email = ?")) {;
+
+                stmt.setString(1, member_email);
+                ResultSet rs = stmt.executeQuery();;
+                if (rs.next()){
+                    String db_email = rs.getString("email");
+                    if(db_email.equals(member_email)){
+                        return true;
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+            return false;
+
+        }
 }
