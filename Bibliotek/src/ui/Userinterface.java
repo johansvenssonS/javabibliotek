@@ -22,14 +22,17 @@ public class Userinterface {
     private LoanService loanService;
     private MemberService memberService;
     private DefaultTableModel tableModel;
-    private  InputForm LoginForm;
+    private InputForm LoginForm;
+    private boolean isLoggedIn ;
 
     public Userinterface(){
         //Skapa instans av service lager, db-koppling
+        isLoggedIn = false;
         bookService = new BookService();
         loanService = new LoanService();
         memberService = new MemberService();
-
+        // Skapa login form,
+        createLoginWindow();
 
         //skapa programfönster med titel.
         frame = new JFrame("Biblioteksystem");
@@ -40,7 +43,6 @@ public class Userinterface {
         //Bygger topmenyn med knapparna.
 
 
-        createInputWindow(new LoginForm(memberService));
         createTopBody();
         //appenda till programfönster(appendchild?)
         //NORTh lägger elementet högst upp ^
@@ -114,6 +116,34 @@ public class Userinterface {
         content.add(submitBtn);
         popUp.add(content);
         popUp.setVisible(true);
+
+    }
+    public boolean createLoginWindow(){
+        LoginForm loginform = new LoginForm(memberService);
+
+        JDialog popUp = new JDialog((Frame) null , "Logga in", true);
+        popUp.setSize(400, 300);
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.add(loginform.buildForm());
+
+        JButton submitBtn = new JButton("Logga in");
+        submitBtn.addActionListener(e -> {
+            boolean result = loginform.sendForm();
+            if (result){
+                isLoggedIn = true;
+                popUp.dispose();
+                System.out.println("Inloggning lyckades!med result som blev:"+ result);
+            } else {
+                JOptionPane.showMessageDialog(popUp,"Lyckades inte logga in result blev:"+ result);
+                isLoggedIn = false;
+            }
+
+        });
+        content.add(submitBtn);
+        popUp.add(content);
+        popUp.setVisible(true);
+        return isLoggedIn ;
 
     }
 

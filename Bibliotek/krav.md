@@ -16,10 +16,10 @@
 
 ## 👤 Låntagare — Obligatoriska krav
 
-- [ ] Se tillgängliga böcker
+- [x] Se tillgängliga böcker
 - [ ] Söka och filtrera bland böcker
-- [ ] Låna en bok
-- [ ] Lämna tillbaka böcker
+- [x] Låna en bok
+- [x] Lämna tillbaka böcker
 - [ ] Förlänga sina lån
 - [ ] Se en profilsida med info om lån
 - [ ] Uppdatera sin info på profilsidan
@@ -28,8 +28,8 @@
 
 ## 🏛️ Bibliotekarie — Obligatoriska krav
 
-- [ ] Skapa nya låntagarkonton
-- [ ] Se alla aktiva lån
+- [x] Skapa nya låntagarkonton
+- [x] Se alla aktiva lån
 - [ ] Lägga till en bok i sortimentet
 - [ ] Redigera en bok i sortimentet
 - [ ] Ta bort en bok ur sortimentet
@@ -42,7 +42,7 @@
 ## ⭐ Frivilliga krav — välj minst 6–7
 
 ### Diverse
-- [ ] Logga in
+- [X] Logga in
 
 ### 👤 Låntagare
 - [ ] Få notifikationer vid försenad återlämning

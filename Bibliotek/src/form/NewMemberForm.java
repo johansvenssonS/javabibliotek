@@ -35,7 +35,7 @@ public class NewMemberForm implements InputForm {
         return panel;
     }
     @Override
-    public void sendForm(){
+    public boolean sendForm(){
         try{
             String first_name = firstName.getText();
             String last_name = lastName.getText();
@@ -46,8 +46,10 @@ public class NewMemberForm implements InputForm {
             //Hämta ett nytt datum objekt och tid just nu
             Date m_date = new Date(new java.util.Date().getTime());
             memberService.createMember(first_name, last_name, m_status,m_type,m_date,m_email);
+            return true;
         } catch (NumberFormatException e ){
             JOptionPane.showMessageDialog(null, "Fel på input, id måste vara ett nummer.");
+            return false;
         }
     }
 

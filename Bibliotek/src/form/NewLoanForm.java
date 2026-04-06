@@ -30,14 +30,16 @@ public class NewLoanForm implements InputForm {
         return panel;
     }
     @Override
-    public void sendForm(){
+    public boolean sendForm(){
         try{
             int book_id = Integer.parseInt(bookId.getText());
             int member_id = Integer.parseInt(memberId.getText());
             String status_now = status.getText();
             loanService.createNewLoan(book_id,member_id,status_now);
+            return true;
         } catch (NumberFormatException e ){
             JOptionPane.showMessageDialog(null, "Fel på input, id måste vara ett nummer.");
+            return false;
         }
     }
 }

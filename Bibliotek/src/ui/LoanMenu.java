@@ -20,7 +20,7 @@ public class LoanMenu extends MenuBar {
     @Override
     protected void buildMenu(){
         //Bygger upp knappar med deras namn och vad som ska hända om man klickar.
-        addButton("Alla lån", () -> userinterface.createTable(loanService.getAllLoans()));
+        addButton("Alla lån", () -> userinterface.createTable(this.loanService.getAllLoans()));
         addButton("Aktiva lån", () -> userinterface.createTable(loanService.getAllActiveLoans()));
         addButton("Skapa lån", () -> userinterface.createInputWindow(new NewLoanForm(loanService)));
         addButton("Lämna tillbaka bok", () -> userinterface.createInputWindow(new ReturnLoanForm(loanService)));

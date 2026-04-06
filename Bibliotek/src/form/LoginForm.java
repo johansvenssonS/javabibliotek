@@ -24,12 +24,13 @@ public class LoginForm implements InputForm {
         return panel;
     }
     @Override
-    public void sendForm(){
+    public boolean sendForm(){
         try{
             String member_email = memberEmail.getText();
-            memberservice.memberLogin(member_email);
+             return memberservice.memberLogin(member_email);
         } catch (NumberFormatException e ){
             JOptionPane.showMessageDialog(null, "Kunde inte hitta användarnamnet i databasen!.");
+            return false;
         }
     }
 }

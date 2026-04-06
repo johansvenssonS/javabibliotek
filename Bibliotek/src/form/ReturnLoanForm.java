@@ -24,12 +24,14 @@ public class ReturnLoanForm implements InputForm {
             return panel;
         }
         @Override
-        public void sendForm(){
+        public boolean sendForm(){
             try{
                 int loan_id = Integer.parseInt(loanId.getText());
                 loanService.returnBook(loan_id);
+                return true;
             } catch (NumberFormatException e ){
                 JOptionPane.showMessageDialog(null, "Fel på input, id måste vara ett nummer.");
+                return false;
             }
         }
     }
