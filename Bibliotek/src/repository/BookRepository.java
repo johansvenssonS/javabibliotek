@@ -103,4 +103,41 @@ public class BookRepository extends Repository {
         return books;
 
     }
+    public  ArrayList<Book> getBooksByCategory(String category){
+        ArrayList<Book> books = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("""
+            SELECT b.title, b.year_published, b.available_copies, bd.summary, bd.language, bd.page_count, a.first_name, a.last_name , c.name FROM books b
+            JOIN book_descriptions bd ON b.id=bd.book_id
+            JOIN book_authors ba ON b.id=ba.book_id
+            JOIN authors a ON a.id=ba.author_id
+            JOIN book_categories bc ON b.id = bc.book_id
+            JOIN categories c ON bc.category_id = c.id
+            WHERE c.name = ?
+            """)){
+            // här ersätter vi första förekomsten av ? med LIKE operator ""%" +searchTerm +"%"
+            //med % framför o efter så tar den alla med den förekomesten i titeln
+            // searchTerm% början på termen, %searchTerm slutet på termen.
+            stmt.setString(1, category);
+            //Kör den ersatta strängen som queery
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String title = rs.getString("title");
+                int yearPublished = rs.getInt("year_published");
+                int availableCopies = rs.getInt("available_copies");
+                String summary = rs.getString("summary");
+                String language = rs.getString("language");
+                int pageCount = rs.getInt("page_count");
+                String author = rs.getString("last_name")+ ","+ rs.getString("first_name");
+
+                Book book = new Book(title,yearPublished,availableCopies,summary,language,pageCount,author);
+                books.add(book);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return books;
+    }
 }

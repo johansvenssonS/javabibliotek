@@ -19,4 +19,8 @@ public class BookService {
         ArrayList<Book> books = bookRepository.searchBooks(searchTerm);
         return books;
     }
+    public ArrayList<Book> getBooksByCategory(String category){
+        ArrayList<Book> books = bookRepository.getBooksByCategory(category);
+        return books;
+    }
 }

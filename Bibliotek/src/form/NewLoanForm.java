@@ -9,7 +9,6 @@ public class NewLoanForm implements InputForm {
     private LoanService loanService;
     private JTextField bookId;
     private JTextField memberId;
-    private JTextField status;
 
     public NewLoanForm(LoanService loanService){
         this.loanService = loanService;
@@ -23,10 +22,8 @@ public class NewLoanForm implements InputForm {
         JPanel panel = new JPanel(new GridLayout(0,2));
         bookId = new JTextField();
         memberId = new JTextField();
-        status = new JTextField();
         panel.add(new JLabel("Ange Bok-ID")); panel.add(bookId);
-        panel.add(new JLabel("Ange model.Member.model.Member-ID")); panel.add(memberId);
-        panel.add(new JLabel("Ange Status")); panel.add(status);
+        panel.add(new JLabel("Ange Member-ID")); panel.add(memberId);
         return panel;
     }
     @Override
@@ -34,7 +31,8 @@ public class NewLoanForm implements InputForm {
         try{
             int book_id = Integer.parseInt(bookId.getText());
             int member_id = Integer.parseInt(memberId.getText());
-            String status_now = status.getText();
+            ///hårdkodat till active för nytt lån status.getText()
+            String status_now = "active";
             loanService.createNewLoan(book_id,member_id,status_now);
             return true;
         } catch (NumberFormatException e ){

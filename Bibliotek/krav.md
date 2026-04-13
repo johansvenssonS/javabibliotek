@@ -17,7 +17,7 @@
 ## 👤 Låntagare — Obligatoriska krav
 
 - [x] Se tillgängliga böcker
-- [ ] Söka och filtrera bland böcker
+- [x] Söka och filtrera bland böcker
 - [x] Låna en bok
 - [x] Lämna tillbaka böcker
 - [ ] Förlänga sina lån

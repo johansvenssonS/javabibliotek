@@ -29,7 +29,7 @@ public class BookMenu extends MenuBar {
         //appenchild till Jpanel panel som är ett attribut kopplat till ui.MenuBar
         panel.add(textField);
         addButton("Sök bok", () -> userinterface.createTable(bookService.searchBooks(textField.getText())));
-        addButton("Filtrera Böker",() -> userinterface.createInputWindow(new FilterForm(bookService)));
+        addButton("Filtrera Böker",() -> userinterface.createInputWindow(new FilterForm(bookService, userinterface)));
         addButton("X", () -> userinterface.clearTable());
     }
 }

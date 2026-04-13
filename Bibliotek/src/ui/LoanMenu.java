@@ -24,6 +24,7 @@ public class LoanMenu extends MenuBar {
         addButton("Aktiva lån", () -> userinterface.createTable(loanService.getAllActiveLoans()));
         addButton("Skapa lån", () -> userinterface.createInputWindow(new NewLoanForm(loanService)));
         addButton("Lämna tillbaka bok", () -> userinterface.createInputWindow(new ReturnLoanForm(loanService)));
+        addButton("Förläng valt lån", () -> userinterface.createInputWindow(new ReturnLoanForm(loanService)));
 
     }
 }
