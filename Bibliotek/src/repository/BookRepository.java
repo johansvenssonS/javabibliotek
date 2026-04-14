@@ -4,7 +4,8 @@ import model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/// Klass för hantera db gällande bok entiteten.
+/// ärver ifrån repository där vi sätter env variabler.
 public class BookRepository extends Repository {
     public ArrayList<Book> getAllBooks(){
 
@@ -36,7 +37,7 @@ public class BookRepository extends Repository {
         }
         return books;
     }
-
+    /// Metod för att hitta tillgängliga böcker.
     public  ArrayList<Book> getAvailableBooks(){
         ArrayList<Book> books = new ArrayList<>();
 
@@ -68,6 +69,7 @@ public class BookRepository extends Repository {
         return books;
 
     }
+    /// Metod för söka bok
     public  ArrayList<Book> searchBooks(String searchTerm){
         ArrayList<Book> books = new ArrayList<>();
         //Skapa prepered statment för ?
@@ -103,9 +105,11 @@ public class BookRepository extends Repository {
         return books;
 
     }
+    /// metod för att söka bok per kategori
     public  ArrayList<Book> getBooksByCategory(String category){
         ArrayList<Book> books = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             /// optimera för för detta ? dto? många onödiga fält
              PreparedStatement stmt = conn.prepareStatement("""
             SELECT b.title, b.year_published, b.available_copies, bd.summary, bd.language, bd.page_count, a.first_name, a.last_name , c.name FROM books b
             JOIN book_descriptions bd ON b.id=bd.book_id
@@ -115,9 +119,7 @@ public class BookRepository extends Repository {
             JOIN categories c ON bc.category_id = c.id
             WHERE c.name = ?
             """)){
-            // här ersätter vi första förekomsten av ? med LIKE operator ""%" +searchTerm +"%"
-            //med % framför o efter så tar den alla med den förekomesten i titeln
-            // searchTerm% början på termen, %searchTerm slutet på termen.
+            // här kommer input ifrån knappen man tryck på.
             stmt.setString(1, category);
             //Kör den ersatta strängen som queery
             ResultSet rs = stmt.executeQuery();

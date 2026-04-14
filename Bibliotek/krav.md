@@ -20,7 +20,7 @@
 - [x] Söka och filtrera bland böcker
 - [x] Låna en bok
 - [x] Lämna tillbaka böcker
-- [ ] Förlänga sina lån
+- [x] Förlänga sina lån
 - [ ] Se en profilsida med info om lån
 - [ ] Uppdatera sin info på profilsidan
 

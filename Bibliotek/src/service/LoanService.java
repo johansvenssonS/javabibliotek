@@ -25,4 +25,10 @@ public class LoanService {
     public boolean isActiveLoan(int loanId){
         return loanRepository.isActive(loanId);
     }
+    public Loan getLoanById(int loanId){
+        return loanRepository.getLoanById(loanId);
+    }
+    public boolean extendLoan(int loanId){
+        return loanRepository.extendLoan(loanId);
+    }
 }

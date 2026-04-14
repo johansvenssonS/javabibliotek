@@ -3,6 +3,7 @@ package ui;
 import form.InputForm;
 import form.LoginForm;
 import form.NewLoanForm;
+import model.Loan;
 import model.TableRow;
 import service.BookService;
 import service.LoanService;
@@ -140,6 +141,47 @@ public class Userinterface {
         popUp.add(content);
         popUp.setVisible(true);
         return isLoggedIn ;
+
+    }
+    public int selectedTableId(){
+        int selectedRow = table.getSelectedRow();
+        //System.out.println(selectedRow);
+        try{
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(frame, "Markera ett fält först!" );
+
+            }
+            /// skum syntax, men getvalueat vill ha object, så antar man overridear de med (int)
+            int selectedId = (int) tableModel.getValueAt(selectedRow, 0);
+
+            Loan loan = loanService.getLoanById(selectedId);
+
+            JDialog popUp = new JDialog((Frame) null , "Lån Hantering", true);
+            popUp.setSize(400, 400);
+            JPanel content = new JPanel();
+            JButton confirmExtension = new JButton("Förläng valt Lån");
+            confirmExtension.addActionListener(e ->{
+                if (loanService.extendLoan(selectedId)){
+                    JOptionPane.showMessageDialog(frame,"Lån med LånId:"+ selectedId +" Förlängt med 14 dagar!");
+                    popUp.dispose();
+                /// onödigt egentligen eftersom man markerar något som ska finnas
+                }else {
+                    JOptionPane.showMessageDialog(frame,"Något blev fel när LånId:"+ selectedId +" Skulle bli förlängt!");
+                }
+            });
+            content.add(new JLabel(loan.toString()));
+            content.add(confirmExtension);
+            popUp.add(content);
+            popUp.setVisible(true);
+            ///JOptionPane.showMessageDialog(frame, loan.toString(), "Låndetaljer", JOptionPane.QUESTION_MESSAGE);;
+            /// test med lånid 18 inlämingsdatum -2024-03-09 borde bli nytt till 2024-03-23
+            /// Funkar
+
+            return selectedId;
+        } catch ( Exception e){
+            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
+            return 0;
+        }
 
     }
 

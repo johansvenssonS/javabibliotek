@@ -65,7 +65,7 @@ public class Loan implements TableRow {
 
     @Override
     public String toString() {
-        return "model.Loan{" +
+        return "Lån{" +
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", memberId=" + memberId +

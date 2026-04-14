@@ -9,19 +9,6 @@ import java.awt.*;
 public class FilterForm implements InputForm{
     private Userinterface userinterface;
     private BookService bookService;
-    private JButton fiction;
-    private JButton real;
-    private JButton scifi;
-    private JButton fantasy;
-    private JButton mystik;
-    private JButton thriller;
-    private JButton romantik;
-    private JButton histroia;
-    private JButton biografi;
-    private JButton självhjälp;
-    private JButton skräck;
-    private JButton äventyr;
-
 
 
     public FilterForm(BookService bookService, Userinterface userinterface){

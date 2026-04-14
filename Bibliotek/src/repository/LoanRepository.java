@@ -96,6 +96,21 @@ public class LoanRepository extends Repository {
             System.out.println("Fel: " + e.getMessage());
         }
     }
+    /// Metod för att förlänga lång
+    public boolean extendLoan(int loanId){
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("UPDATE loans set due_date = DATE_ADD(due_date, INTERVAL 14 DAY), status= 'Active'" +
+                     " WHERE id = ?")) {;
+
+            stmt.setInt(1,loanId);
+            stmt.executeUpdate();
+            System.out.println("Lånet med LånId:"+ loanId + "är förlängt med 14 dagar!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return false;
+    }
     public boolean isActive(int loanId){
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement("SELECT loans.status FROM loans" +
@@ -112,5 +127,31 @@ public class LoanRepository extends Repository {
             System.out.println("Fel: " + e.getMessage());
         }
     return false;
+    }
+    public Loan getLoanById(int loanId){
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loans" +
+                     "  WHERE id = ?")) {;
+
+            stmt.setInt(1,loanId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                int book_id = rs.getInt("book_id");
+                int member_id = rs.getInt("member_id");
+                Date loan_date = rs.getDate("loan_date");
+                Date due_date = rs.getDate("due_date");
+                Date returnDate = rs.getDate("return_date");
+                String status = rs.getString("status");
+
+                Loan loan = new Loan(id, book_id, returnDate, status, due_date, loan_date, member_id);
+                return loan;
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+    return null;
     }
 }
