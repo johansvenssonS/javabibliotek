@@ -154,4 +154,31 @@ public class LoanRepository extends Repository {
         }
     return null;
     }
+    public ArrayList <Loan> getMembersLoans(int memberId){
+        ArrayList <Loan> loans = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loans" +
+                     "  WHERE member_id = ?")) {;
+
+            stmt.setInt(1,memberId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int book_id = rs.getInt("book_id");
+                int member_id = rs.getInt("member_id");
+                Date loan_date = rs.getDate("loan_date");
+                Date due_date = rs.getDate("due_date");
+                Date returnDate = rs.getDate("return_date");
+                String status = rs.getString("status");
+
+                Loan loan = new Loan(id, book_id, returnDate, status, due_date, loan_date, member_id);
+                loans.add(loan);
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return loans;
+    }
 }

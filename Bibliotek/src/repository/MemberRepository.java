@@ -66,6 +66,35 @@ public class MemberRepository extends Repository {
             }
             return null;
         }
+        public Member getMemberById(int userId){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM members m \n"+
+                         "WHERE m.id = ?")) {;
+
+                stmt.setInt(1, userId );
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String first_name = rs.getString("first_name");
+                    String last_name = rs.getString("last_name");
+                    String email = rs.getString("email");
+                    Date membership_date = rs.getDate("membership_date");
+                    /// fastställa enum värdet med valueof
+                    ///  toUppercase för att enumvärden är tydlgein bestpractice i versaler.
+                    Member.MembershipType membershipType = Member.MembershipType.valueOf(rs.getString("membership_type").toUpperCase()
+                    );
+                    Member.MemberStatus memberStatus = Member.MemberStatus.valueOf(rs.getString("status").toUpperCase()
+                    );
+                    return new Member(id,first_name,last_name,email,membership_date,membershipType,memberStatus);
+
+
+                }
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+            return null;
+        }
         public int createMember(String firstName, String lastName, Member.MemberStatus status, Member.MembershipType membership_type, Date membership_date, String email){
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement("INSERT INTO members (first_name, last_name, status, membership_type, membership_date, email) \n"+
@@ -93,7 +122,7 @@ public class MemberRepository extends Repository {
             }
             return -1;
         }
-        public boolean login(String member_email){
+        public int login(String member_email){
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement("SELECT * FROM members m \n"+
                          "WHERE m.email = ?")) {;
@@ -101,15 +130,16 @@ public class MemberRepository extends Repository {
                 stmt.setString(1, member_email);
                 ResultSet rs = stmt.executeQuery();;
                 if (rs.next()){
-                    String db_email = rs.getString("email");
-                    if(db_email.equals(member_email)){
-                        return true;
+                    String dbEmail = rs.getString("email");
+                    int userId = rs.getInt("id");
+                    if(dbEmail.equals(member_email)){
+                        return userId;
                     }
                 }
             } catch (SQLException e) {
                 System.out.println("Fel: " + e.getMessage());
             }
-            return false;
+            return 0;
 
         }
 }

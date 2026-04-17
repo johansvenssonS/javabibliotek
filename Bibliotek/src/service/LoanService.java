@@ -31,4 +31,7 @@ public class LoanService {
     public boolean extendLoan(int loanId){
         return loanRepository.extendLoan(loanId);
     }
+    public ArrayList <Loan> getMembersLoans(int memberId){
+        return loanRepository.getMembersLoans(memberId);
+    }
 }

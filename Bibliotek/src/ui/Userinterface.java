@@ -3,6 +3,7 @@ package ui;
 import form.InputForm;
 import form.LoginForm;
 import form.NewLoanForm;
+import form.UserPage;
 import model.Loan;
 import model.TableRow;
 import service.BookService;
@@ -25,6 +26,7 @@ public class Userinterface {
     private DefaultTableModel tableModel;
     private InputForm LoginForm;
     private boolean isLoggedIn ;
+    private int userId;
 
     public Userinterface(){
         //Skapa instans av service lager, db-koppling
@@ -118,7 +120,7 @@ public class Userinterface {
     public boolean createLoginWindow(){
         LoginForm loginform = new LoginForm(memberService);
 
-        JDialog popUp = new JDialog((Frame) null , "Logga in", true);
+        JDialog popUp = new JDialog((Frame) null , loginform.getTitle(), true);
         popUp.setSize(800, 800);
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
@@ -126,9 +128,10 @@ public class Userinterface {
 
         JButton submitBtn = new JButton("Logga in");
         submitBtn.addActionListener(e -> {
-            boolean result = loginform.sendForm();
-            if (result){
+            int result = loginform.sendForm();
+            if (result != 0){
                 isLoggedIn = true;
+                userId = result;
                 popUp.dispose();
                 System.out.println("Inloggning lyckades!med result som blev:"+ result);
             } else {
@@ -141,6 +144,20 @@ public class Userinterface {
         popUp.add(content);
         popUp.setVisible(true);
         return isLoggedIn ;
+
+    }
+    public boolean createUserWindow(){
+        UserPage userPage = new UserPage(loanService, memberService, userId);
+        JDialog popUp = new JDialog((Frame) null , userPage.getTitle(), true);
+        popUp.setSize(800, 800);
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.add(userPage.buildForm());
+        popUp.add(content);
+        popUp.setVisible(true);
+        return true;
+
+
 
     }
     public int selectedTableId(){

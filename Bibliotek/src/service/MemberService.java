@@ -20,7 +20,10 @@ public class MemberService {
         return memberRepository.createMember(firstName, lastName, status, membership_type, membership_date, email);
 
     }
-    public boolean memberLogin(String member_email){
+    public int memberLogin(String member_email){
         return memberRepository.login(member_email);
+    }
+    public Member getMemberById(int userId){
+        return memberRepository.getMemberById(userId);
     }
 }

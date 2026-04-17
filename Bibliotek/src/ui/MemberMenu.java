@@ -39,7 +39,7 @@ public class MemberMenu extends MenuBar {
             userinterface.createTable(userArray);
         });
         addButton("Skapa ny medlem", () -> userinterface.createInputWindow(new NewMemberForm(memberService)));
-
+        addButton("Mina Sidor", () -> userinterface.createUserWindow());
         //Bygger upp knappar med deras namn och vad som ska hända om man klickar.
         //addButton("Alla böcker", () -> userinterface.createTable(bookService.getAllBooks()));
         //addButton("X", () -> userinterface.clearTable());

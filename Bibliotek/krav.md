@@ -21,7 +21,7 @@
 - [x] Låna en bok
 - [x] Lämna tillbaka böcker
 - [x] Förlänga sina lån
-- [ ] Se en profilsida med info om lån
+- [x] Se en profilsida med info om lån
 - [ ] Uppdatera sin info på profilsidan
 
 ---
