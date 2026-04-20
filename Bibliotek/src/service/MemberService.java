@@ -26,4 +26,16 @@ public class MemberService {
     public Member getMemberById(int userId){
         return memberRepository.getMemberById(userId);
     }
+    public void updateFirstName(String firstName, int id){
+        memberRepository.updateFirstName(firstName,id);
+    }
+    public void updateLastName(String lastName, int id){
+        memberRepository.updateLastName(lastName, id);
+    }
+    public void updateEmail(String email, int id){
+        memberRepository.updateEmail(email, id);
+    }
+    public void updateMembership(int id){
+        memberRepository.updateMembership(id);
+    }
 }

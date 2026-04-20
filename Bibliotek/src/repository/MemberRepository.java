@@ -142,4 +142,55 @@ public class MemberRepository extends Repository {
             return 0;
 
         }
+        public void updateFirstName(String firstName, int id){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("UPDATE members set first_name = ?" +
+                         " WHERE id = ?")) {;
+                stmt.setString(1, firstName);
+                stmt.setInt(2,id);
+                stmt.executeUpdate();
+                System.out.println("Medlem med id: "+ id + "Har bytt förnamn till: "+ firstName);
+
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+        }
+        public void updateLastName(String lastName, int id){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("UPDATE members set last_name = ?" +
+                         " WHERE id = ?")) {;
+                stmt.setString(1, lastName);
+                stmt.setInt(2,id);
+                stmt.executeUpdate();
+                System.out.println("Medlem med id: "+ id + "Har bytt efternamn till: "+ lastName);
+
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+        }
+        public void updateEmail(String email, int id){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("UPDATE members set email = ?" +
+                         " WHERE id = ?")) {;
+                stmt.setString(1, email);
+                stmt.setInt(2,id);
+                stmt.executeUpdate();
+                System.out.println("Medlem med id: "+ id + "Har bytt email till: "+ email);
+
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+        }
+        public void updateMembership(int id){
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement("UPDATE members set status = 'active'" +
+                         " WHERE id = ?")) {;
+                stmt.setInt(1,id);
+                stmt.executeUpdate();
+                System.out.println("Medlem med id: "+ id + "Har förnyat sitt medlemskap");
+
+            } catch (SQLException e) {
+                System.out.println("Fel: " + e.getMessage());
+            }
+        }
 }

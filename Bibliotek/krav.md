@@ -22,8 +22,8 @@
 - [x] Lämna tillbaka böcker
 - [x] Förlänga sina lån
 - [x] Se en profilsida med info om lån
-- [ ] Uppdatera sin info på profilsidan
-
+- [X] Uppdatera sin info på profilsidan
+- Fixa felhantering om medlem inte har ngt lån och öppnar mina sidor. 
 ---
 
 ## 🏛️ Bibliotekarie — Obligatoriska krav
