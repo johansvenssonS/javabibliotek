@@ -24,19 +24,22 @@
 - [x] Se en profilsida med info om lån
 - [X] Uppdatera sin info på profilsidan
 - Fixa felhantering om medlem inte har ngt lån och öppnar mina sidor. 
+- Fixa felhantering när man söker på böcker som de finns 1 av bara, J t.ex
+- kan också vara att nya böcker inte har författare som book klassen kräver.
 ---
 
 ## 🏛️ Bibliotekarie — Obligatoriska krav
 
 - [x] Skapa nya låntagarkonton
 - [x] Se alla aktiva lån
-- [ ] Lägga till en bok i sortimentet
-- [ ] Redigera en bok i sortimentet
+- [x] Lägga till en bok i sortimentet
+- [x] Redigera en bok i sortimentet
 - [ ] Ta bort en bok ur sortimentet
-- [ ] Lägga till författare
+- [X] Lägga till författare
 - [ ] Redigera författare
 - [ ] Lägga böcker i kategorier
 
+- Fixa felhantering om man klickar på redigera bok men tabellen inte har kommit än
 ---
 
 ## ⭐ Frivilliga krav — välj minst 6–7

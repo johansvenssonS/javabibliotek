@@ -19,7 +19,7 @@ public class LoginForm {
 
     public JPanel buildForm(){
         JPanel panel = new JPanel(new GridLayout(0,1));
-        memberEmail = new JTextField();
+        memberEmail = new JTextField("aiden.smith43@email.com");
         panel.add(new JLabel("EmailAdress")); panel.add(memberEmail);
         return panel;
     }

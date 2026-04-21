@@ -1,6 +1,6 @@
 package ui;
 
-import form.FilterForm;
+import form.*;
 import service.BookService;
 
 import javax.swing.*;
@@ -25,11 +25,15 @@ public class BookMenu extends MenuBar {
         //Bygger upp knappar med deras namn och vad som ska hända om man klickar.
         addButton("Tillgängliga böcker", () -> userinterface.createTable(bookService.getAvailableBooks()));
         addButton("Alla böcker", () -> userinterface.createTable(bookService.getAllBooks()));
+        addButton("Lägg till bok", () -> userinterface.createInputWindow(new AddBokForm(bookService)));
+        addButton("Redigera bok", () -> userinterface.createInputWindow(new UpdateBookForm(bookService, userinterface)));
+        addButton("Radera bok", () -> userinterface.createInputWindow(new RemoveBookForm(bookService, userinterface)));
         textField = new JTextField("Sök bok...",20);
         //appenchild till Jpanel panel som är ett attribut kopplat till ui.MenuBar
         panel.add(textField);
         addButton("Sök bok", () -> userinterface.createTable(bookService.searchBooks(textField.getText())));
         addButton("Filtrera Böker",() -> userinterface.createInputWindow(new FilterForm(bookService, userinterface)));
         addButton("X", () -> userinterface.clearTable());
+        addButton("Lägg till författare", () -> userinterface.createInputWindow(new AddAuthorForm(bookService)));
     }
 }

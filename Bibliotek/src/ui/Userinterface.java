@@ -4,6 +4,8 @@ import form.InputForm;
 import form.LoginForm;
 import form.NewLoanForm;
 import form.UserPage;
+import model.Book;
+import model.BookDTO;
 import model.Loan;
 import model.TableRow;
 import service.BookService;
@@ -200,6 +202,24 @@ public class Userinterface {
             return 0;
         }
 
+    }
+    public BookDTO selectedBook() {
+        int selectedRow = table.getSelectedRow();
+        //System.out.println(selectedRow);
+        try {
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(frame, "Markera ett fält först!");
+                return null;
+            }
+            String selectedBook = (String) tableModel.getValueAt(selectedRow, 0);
+            int bookId = bookService.getBookIdByTitle(selectedBook);
+            System.out.println(bookId);
+            return bookService.getBook(bookId);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
+        }
+        return null;
     }
 
 }
