@@ -1,5 +1,6 @@
 package repository;//databas interaktion
 
+import model.Author;
 import model.Book;
 import model.BookDTO;
 
@@ -38,6 +39,59 @@ public class BookRepository extends Repository {
         }
         return books;
     }
+    public ArrayList<Author> getAllAuthors(){
+
+        ArrayList<Author> authors = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT a.id , a.first_name, a.last_name, a.nationality, a.birth_date FROM authors a");
+
+            while (rs.next()) {
+                int authorId = rs.getInt("id");
+                 String firstName = rs.getString("first_name");
+                 String lastName = rs.getString("last_name");
+                 String natioanlity = rs.getString("nationality");
+                 Date birthDate = rs.getDate("birth_date");
+                 Author author = new Author(authorId,firstName,birthDate,natioanlity,lastName);
+                 authors.add(author);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return authors;
+    }
+    public Author getAuthor(String firstName, String lastName, Date birthDate){
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(
+            "SELECT a.id, a.first_name, a.last_name, a.nationality, a.birth_date \n" +
+                " FROM authors a \n"+
+                "WHERE a.first_name = ? AND a.last_name = ? AND a.birth_date = ?")){
+
+            stmt.setString(1,firstName);
+            stmt.setString(2,lastName);
+            stmt.setDate(3,birthDate);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int authorId = rs.getInt("id");
+                String natioanlity = rs.getString("nationality");
+                return new Author(authorId,firstName,birthDate,natioanlity,lastName);
+
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return null;
+
+    }
+
+
     /// Metod för att hitta tillgängliga böcker.
     public  ArrayList<Book> getAvailableBooks(){
         ArrayList<Book> books = new ArrayList<>();
@@ -265,6 +319,22 @@ public class BookRepository extends Repository {
                 System.out.println("Författare: " + firstName + "," + lastName + "tillagd och fått id: " +newAuthorID );
             }
 
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+    }
+    public void updateAuthor(int id,String firstName, String lastName, String nationality, java.sql.Date birthDate){
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(
+                     "UPDATE  authors SET first_name=?, last_name=?, nationality=?, birth_date=?\n"+
+                             "WHERE id = ? ")){
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, nationality);
+            stmt.setDate(4, birthDate);
+            stmt.setInt(5, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Fel: " + e.getMessage());
         }

@@ -36,7 +36,7 @@
 - [x] Redigera en bok i sortimentet
 - [ ] Ta bort en bok ur sortimentet
 - [X] Lägga till författare
-- [ ] Redigera författare
+- [x] Redigera författare
 - [ ] Lägga böcker i kategorier
 
 - Fixa felhantering om man klickar på redigera bok men tabellen inte har kommit än

@@ -4,10 +4,7 @@ import form.InputForm;
 import form.LoginForm;
 import form.NewLoanForm;
 import form.UserPage;
-import model.Book;
-import model.BookDTO;
-import model.Loan;
-import model.TableRow;
+import model.*;
 import service.BookService;
 import service.LoanService;
 import service.MemberService;
@@ -16,6 +13,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
+
 //klass för att skapa ett enkelt ui i java
 public class Userinterface {
     private JFrame frame;
@@ -215,6 +214,30 @@ public class Userinterface {
             int bookId = bookService.getBookIdByTitle(selectedBook);
             System.out.println(bookId);
             return bookService.getBook(bookId);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
+        }
+        return null;
+    }
+    public Author selectedAuthor() {
+        int selectedRow = table.getSelectedRow();
+        //System.out.println(selectedRow);
+        try {
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(frame, "Markera ett fält först!");
+                return null;
+            }
+            String selectedFirstName = (String) tableModel.getValueAt(selectedRow, 0);
+            String selectedLastName = (String) tableModel.getValueAt(selectedRow, 1);
+            java.sql.Date selectedBirthDate = (java.sql.Date) tableModel.getValueAt(selectedRow, 3);
+
+
+            System.out.println(selectedFirstName);
+            System.out.println(selectedLastName);
+            System.out.println(selectedBirthDate);
+
+            return bookService.getAuthor(selectedFirstName,selectedLastName, selectedBirthDate);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);

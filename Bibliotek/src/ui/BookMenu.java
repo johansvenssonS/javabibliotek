@@ -34,6 +34,9 @@ public class BookMenu extends MenuBar {
         addButton("Sök bok", () -> userinterface.createTable(bookService.searchBooks(textField.getText())));
         addButton("Filtrera Böker",() -> userinterface.createInputWindow(new FilterForm(bookService, userinterface)));
         addButton("X", () -> userinterface.clearTable());
+        addButton("Alla författare", () -> userinterface.createTable(bookService.getAllAuthors()));
         addButton("Lägg till författare", () -> userinterface.createInputWindow(new AddAuthorForm(bookService)));
+        addButton("Redigera författare", () -> userinterface.createInputWindow(new UpdateAuthorForm(bookService, userinterface)));
+
     }
 }

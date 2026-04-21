@@ -1,5 +1,6 @@
 package service;
 
+import model.Author;
 import model.Book;
 import model.BookDTO;
 import repository.BookRepository;
@@ -12,6 +13,13 @@ public class BookService {
     public ArrayList <Book> getAllBooks(){
         ArrayList<Book> books = bookRepository.getAllBooks();
         return books;
+    }
+    public ArrayList <Author> getAllAuthors(){
+        ArrayList<Author> authors = bookRepository.getAllAuthors();
+        return authors;
+    }
+    public Author getAuthor(String firstName, String lastName, Date birthDate){
+        return bookRepository.getAuthor(firstName, lastName, birthDate);
     }
     public ArrayList <Book> getAvailableBooks(){
         ArrayList<Book> books = bookRepository.getAvailableBooks();
@@ -39,6 +47,11 @@ public class BookService {
     public void updateBook(String title, String isnb, int yP, int tC, int aC, int bookID){
         bookRepository.updateBook(bookID,title,isnb,yP,tC,aC);
     }
+    public void updateAuthor(int id ,String firstName, String lastName, String nationality, Date birthDate){
+        bookRepository.updateAuthor( id,firstName,lastName,nationality,birthDate);
+    }
+
+
     public void removeBook(int id){
         bookRepository.removeBook(id);
     }
