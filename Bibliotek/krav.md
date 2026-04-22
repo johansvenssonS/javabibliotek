@@ -34,10 +34,10 @@
 - [x] Se alla aktiva lån
 - [x] Lägga till en bok i sortimentet
 - [x] Redigera en bok i sortimentet
-- [ ] Ta bort en bok ur sortimentet
+- [x] Ta bort en bok ur sortimentet
 - [X] Lägga till författare
 - [x] Redigera författare
-- [ ] Lägga böcker i kategorier
+- [X] Lägga böcker i kategorier
 
 - Fixa felhantering om man klickar på redigera bok men tabellen inte har kommit än
 ---
@@ -52,13 +52,14 @@
 - [ ] Se sina böter
 - [ ] Lämna recensioner efter läst bok
 - [ ] Reservera en bok
-- [ ] Ändra medlemskapsstatus
+- [X] Ändra medlemskapsstatus
+- Om man inte är aktiv kan man bli aktiv dvs
 - [ ] Logga in och ut
 - [ ] Se statistik över mest utlånade böcker
 
 ### 🏛️ Bibliotekarie
 - [ ] Se statistik över mest utlånade böcker
-- [ ] Registrera en återlämnad bok manuellt
+- [X] Registrera en återlämnad bok manuellt
 - [ ] Se register över förfallna lån och låntagare
 - [ ] Skicka notifikationer till låntagare
 - [ ] Stänga av låntagarkonton

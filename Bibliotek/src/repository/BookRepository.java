@@ -3,6 +3,7 @@ package repository;//databas interaktion
 import model.Author;
 import model.Book;
 import model.BookDTO;
+import model.CreateBookDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -188,11 +189,7 @@ public class BookRepository extends Repository {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement("SELECT b.title,b.isbn, b.year_published,b.total_copies, b.available_copies FROM books b\n" +
                 "WHERE b.id = ?")){;
-            // här ersätter vi första förekomsten av ? med LIKE operator ""%" +searchTerm +"%"
-            //med % framför o efter så tar den alla med den förekomesten i titeln
-            // searchTerm% början på termen, %searchTerm slutet på termen.
             stmt.setInt(1, id);
-            //Kör den ersatta strängen som queery
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -245,32 +242,6 @@ public class BookRepository extends Repository {
             System.out.println("Fel: " + e.getMessage());
         }
         return books;
-    }
-    public boolean createNewBook(String title, String isbn, int year_published, int total_copies, int available_copies){
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO books (title, isbn, year_published, total_copies, available_copies) \n"+
-                             "VALUES(?,?,?,?,?)",
-                     Statement.RETURN_GENERATED_KEYS)) {;
-
-///ACTIVE till actives
-            stmt.setString(1, title);
-            stmt.setString(2, isbn);
-            stmt.setInt(3, year_published);
-            stmt.setInt(4, total_copies);
-            stmt.setInt(5, available_copies);
-            stmt.executeUpdate();
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if(generatedKeys.next()){
-                int newBookID = generatedKeys.getInt(1);
-                System.out.println("Bok med"+title + " Har blivit tillagd och fått id: "+ newBookID );
-                return true;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Fel: " + e.getMessage());
-        }
-        return false;
     }
     public void updateBook(int book_id,String title, String isbn, int year_published, int total_copies, int available_copies){
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -340,4 +311,130 @@ public class BookRepository extends Repository {
         }
     }
 
+    public void createFullBook(CreateBookDTO dto){
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD)){
+            conn.setAutoCommit(false);
+            try{
+                int bookId = insertBook(conn,dto);
+                insertDescription(conn, dto, bookId);
+                int authorId = getAuthorId(conn,dto);
+                insertBookAuthor(conn,bookId, authorId);
+                insertBookCategory(conn,bookId,dto);
+                conn.commit();
+            } catch (SQLException e){
+                conn.rollback();
+                System.out.println("Något gick fel i stegen, rullar tbx" + e.getMessage());
+            }
+        }catch (SQLException e ){
+            System.out.println("Fel: " + e.getMessage());
+        }
+    }
+
+
+
+    //private metod för att insert i book, använder transaction connectionen.
+    private int insertBook(Connection conn, CreateBookDTO dto){
+        try{
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO books (title, isbn, year_published, total_copies, available_copies) \n"+
+                             "VALUES(?,?,?,?,?)",
+                     Statement.RETURN_GENERATED_KEYS);
+
+///ACTIVE till actives
+            stmt.setString(1, dto.getTitle());
+            stmt.setString(2, dto.getIsbn());
+            stmt.setInt(3, dto.getYearPublished());
+            stmt.setInt(4, dto.getTotalCopies());
+            stmt.setInt(5, dto.getAvailableCopies());
+            stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if(generatedKeys.next()){
+                int newBookID = generatedKeys.getInt(1);
+                System.out.println("Boksteg klart");
+                return newBookID;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return 0;
+    }
+    private void insertDescription(Connection conn, CreateBookDTO dto, int bookId){
+        try{
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_descriptions (book_id, summary, language, page_count) \n"+
+                             "VALUES(?,?,?,?)");
+
+            stmt.setInt(1, bookId);
+            stmt.setString(2, dto.getSummary());
+            stmt.setString(3, dto.getLanguage());
+            stmt.setInt(4, dto.getPageCount());
+            stmt.executeUpdate();
+            System.out.println("insertDescription klart");
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+    }
+
+    private int getAuthorId(Connection conn, CreateBookDTO dto){
+        try{
+            PreparedStatement stmt = conn.prepareStatement(" SELECT id FROM authors a \n"+
+                    "WHERE (a.first_name = ? AND a.last_name = ? AND a.birth_date =?)");
+
+            stmt.setString(1, dto.getAuthorFirstName());
+            stmt.setString(2, dto.getAuthorLastName());
+            stmt.setDate(3, dto.getAuthorBirthDate());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                int id = rs.getInt("id");
+                System.out.println("getAuthor klart");
+                return id;
+            }
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    private void insertBookAuthor(Connection conn, int bookId, int authorId){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO book_authors (book_id, author_id) \n"+
+                    "VALUES(?,?)");
+
+            stmt.setInt(1, bookId);
+            stmt.setInt(2, authorId);//inte 1 :)
+            stmt.executeUpdate();
+            System.out.println("insertBookauthor klart");
+
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+    }
+    private void insertBookCategory(Connection conn, int bookId, CreateBookDTO dto){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM categories WHERE name = ?");
+
+            stmt.setString(1, dto.getBookCategory());
+            ResultSet rs = stmt.executeQuery();
+
+            if(!rs.next()){
+                System.out.println("Kategori hittades inte:" + dto.getBookCategory());
+                return;
+            }
+            int categoryId = rs.getInt("id");
+            System.out.println("id i  insertbookcategory klart");
+
+
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO book_categories (book_id, category_id) \n"+
+                    "VALUES (?,?)");
+            insert.setInt(1,bookId);
+            insert.setInt(2, categoryId);
+            insert.executeUpdate();
+            System.out.println("hela insertbookcategory klart");
+
+
+        } catch (SQLException e) {
+            System.out.println("Fel: " + e.getMessage());
+        }
+    }
 }

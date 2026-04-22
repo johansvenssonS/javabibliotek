@@ -3,8 +3,12 @@ package service;
 import model.Author;
 import model.Book;
 import model.BookDTO;
+import model.CreateBookDTO;
 import repository.BookRepository;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -33,9 +37,8 @@ public class BookService {
         ArrayList<Book> books = bookRepository.getBooksByCategory(category);
         return books;
     }
-    public boolean createNewBook(String title, String isbn, int year_published, int
-            total_copies, int available_copies){
-        return bookRepository.createNewBook(title,isbn,year_published,total_copies, available_copies);
+    public void createNewBook(CreateBookDTO cbDTO){
+        bookRepository.createFullBook(cbDTO);
     }
     public BookDTO getBook(int id){
         return bookRepository.getBook(id);
