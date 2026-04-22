@@ -96,23 +96,28 @@ public class Userinterface {
     //tar emot arraylist ifrån med ett interface som styr vad som efterfrågas.
     public void createTable(ArrayList<?extends TableRow> rows){
         //Hämta specifika kolumnnamn ifrån books,members,loans
-        String[] columnNames = rows.get(0).getColumnNamn();
-        //bygger ny tabell default model, med satta rubriker på kolumner
-        tableModel = new DefaultTableModel(columnNames, 0);
-        //lägger till en rad i tabellen
-        for(TableRow row : rows){
-            tableModel.addRow(row.toRow());
-        }
-        if(tabelParent != null){
-            frame.remove(tabelParent);
-        }
+        try {
+            String[] columnNames = rows.get(0).getColumnNamn();
+            //bygger ny tabell default model, med satta rubriker på kolumner
+            tableModel = new DefaultTableModel(columnNames, 0);
+            //lägger till en rad i tabellen
+            for (TableRow row : rows) {
+                tableModel.addRow(row.toRow());
+            }
+            if (tabelParent != null) {
+                frame.remove(tabelParent);
+            }
 
-        table = new JTable(tableModel);
-        table.setBackground(Color.GRAY);
-        tabelParent = new JScrollPane(table);
-        frame.add(tabelParent, BorderLayout.CENTER);
-        rerender();
+            table = new JTable(tableModel);
+            table.setBackground(Color.GRAY);
+            tabelParent = new JScrollPane(table);
+            frame.add(tabelParent, BorderLayout.CENTER);
+            rerender();
+        }catch (IndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(frame, "Hittade inget med den söktermen!" );
 
+
+        }
     }
     //generell metod för att skapa input fönster
     public void createInputWindow(InputForm form){
@@ -176,64 +181,73 @@ public class Userinterface {
 
     }
     public int selectedTableId(){
-        int selectedRow = table.getSelectedRow();
-        //System.out.println(selectedRow);
-        try{
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(frame, "Markera ett fält först!" );
+        try {
+            int selectedRow = table.getSelectedRow();
+            //System.out.println(selectedRow);
+            try {
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(frame, "Markera ett fält först!");
+
+                }
+                /// skum syntax, men getvalueat vill ha object, så antar man overridear de med (int)
+                int selectedId = (int) tableModel.getValueAt(selectedRow, 0);
+
+                Loan loan = loanService.getLoanById(selectedId);
+
+                JDialog popUp = new JDialog((Frame) null, "Lån Hantering", true);
+                popUp.setSize(400, 400);
+                JPanel content = new JPanel();
+                JButton confirmExtension = new JButton("Förläng valt Lån");
+                confirmExtension.addActionListener(e -> {
+                    if (loanService.extendLoan(selectedId)) {
+                        JOptionPane.showMessageDialog(frame, "Lån med LånId:" + selectedId + " Förlängt med 14 dagar!");
+                        popUp.dispose();
+                        /// onödigt egentligen eftersom man markerar något som ska finnas
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Något blev fel när LånId:" + selectedId + " Skulle bli förlängt!");
+                    }
+                });
+                content.add(new JLabel(loan.toString()));
+                content.add(confirmExtension);
+                popUp.add(content);
+                popUp.setVisible(true);
+                ///JOptionPane.showMessageDialog(frame, loan.toString(), "Låndetaljer", JOptionPane.QUESTION_MESSAGE);;
+                /// test med lånid 18 inlämingsdatum -2024-03-09 borde bli nytt till 2024-03-23
+                /// Funkar
+
+                return selectedId;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån ");
 
             }
-            /// skum syntax, men getvalueat vill ha object, så antar man overridear de med (int)
-            int selectedId = (int) tableModel.getValueAt(selectedRow, 0);
-
-            Loan loan = loanService.getLoanById(selectedId);
-
-            JDialog popUp = new JDialog((Frame) null , "Lån Hantering", true);
-            popUp.setSize(400, 400);
-            JPanel content = new JPanel();
-            JButton confirmExtension = new JButton("Förläng valt Lån");
-            confirmExtension.addActionListener(e ->{
-                if (loanService.extendLoan(selectedId)){
-                    JOptionPane.showMessageDialog(frame,"Lån med LånId:"+ selectedId +" Förlängt med 14 dagar!");
-                    popUp.dispose();
-                /// onödigt egentligen eftersom man markerar något som ska finnas
-                }else {
-                    JOptionPane.showMessageDialog(frame,"Något blev fel när LånId:"+ selectedId +" Skulle bli förlängt!");
-                }
-            });
-            content.add(new JLabel(loan.toString()));
-            content.add(confirmExtension);
-            popUp.add(content);
-            popUp.setVisible(true);
-            ///JOptionPane.showMessageDialog(frame, loan.toString(), "Låndetaljer", JOptionPane.QUESTION_MESSAGE);;
-            /// test med lånid 18 inlämingsdatum -2024-03-09 borde bli nytt till 2024-03-23
-            /// Funkar
-
-            return selectedId;
-        } catch ( Exception e){
-            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
-            return 0;
+        }catch (NullPointerException e ){
+            JOptionPane.showMessageDialog(frame, "Klicka först på Alla lån sedan kan du markera ett!");
         }
-
+        return 0;
     }
     public BookDTO selectedBook() {
-        int selectedRow = table.getSelectedRow();
-        //System.out.println(selectedRow);
         try {
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(frame, "Markera ett fält först!");
-                return null;
-            }
-            String selectedBook = (String) tableModel.getValueAt(selectedRow, 0);
-            int bookId = bookService.getBookIdByTitle(selectedBook);
-            System.out.println(bookId);
-            return bookService.getBook(bookId);
+            int selectedRow = table.getSelectedRow();
+            //System.out.println(selectedRow);
+            try {
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(frame, "Markera ett fält först!");
+                    return null;
+                }
+                String selectedBook = (String) tableModel.getValueAt(selectedRow, 0);
+                int bookId = bookService.getBookIdByTitle(selectedBook);
+                System.out.println(bookId);
+                return bookService.getBook(bookId);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(frame, "Du har inte markerat en bok ");
+            }
+        }catch (NullPointerException e ){
+            JOptionPane.showMessageDialog(frame, "Klicka först på alla böcker sedan kan du markera ett!");
         }
-        return null;
-    }
+            return null;
+        }
+
     public Author selectedAuthor() {
         int selectedRow = table.getSelectedRow();
         //System.out.println(selectedRow);
@@ -254,7 +268,7 @@ public class Userinterface {
             return bookService.getAuthor(selectedFirstName,selectedLastName, selectedBirthDate);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(frame, "Du har inte markerat ett lån " + e);
+            JOptionPane.showMessageDialog(frame, "Du har inte markerat en författare ");
         }
         return null;
     }

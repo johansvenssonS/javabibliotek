@@ -23,6 +23,9 @@ public class UpdateAuthorForm implements InputForm{
         this.bookService = bookService;
         this.userinterface = userinterface;
         this.author = userinterface.selectedAuthor();
+        if(this.author ==null){
+            throw new IllegalStateException("Ingen författare är markerad!");
+        }
     }
 
     @Override

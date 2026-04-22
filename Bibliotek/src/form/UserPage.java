@@ -82,7 +82,9 @@ public class UserPage {
     }
 
     public JScrollPane createTable(ArrayList<?extends TableRow> rows){
-        String[] columnNames = rows.get(0).getColumnNamn();
+        try{
+            String[] columnNames = rows.get(0).getColumnNamn();
+
         //bygger ny tabell default model, med satta rubriker på kolumner
         tableModel = new DefaultTableModel(columnNames, 0);
         //lägger till en rad i tabellen
@@ -93,6 +95,9 @@ public class UserPage {
         table.setBackground(Color.GRAY);
         tabelParent = new JScrollPane(table);
         return tabelParent;
+        }catch (IndexOutOfBoundsException e){
+            return new JScrollPane(tabelParent);
+        }//felhantering om medlemen inte har några lån,så returnera tom tabell.
 
     }
 

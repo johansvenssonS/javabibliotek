@@ -23,9 +23,8 @@
 - [x] Förlänga sina lån
 - [x] Se en profilsida med info om lån
 - [X] Uppdatera sin info på profilsidan
-- Fixa felhantering om medlem inte har ngt lån och öppnar mina sidor. 
+- [X] Fixa felhantering om medlem inte har ngt lån och öppnar mina sidor.
 - Fixa felhantering när man söker på böcker som de finns 1 av bara, J t.ex
-- kan också vara att nya böcker inte har författare som book klassen kräver.
 ---
 
 ## 🏛️ Bibliotekarie — Obligatoriska krav

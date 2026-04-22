@@ -26,7 +26,14 @@ public class BookMenu extends MenuBar {
         addButton("Tillgängliga böcker", () -> userinterface.createTable(bookService.getAvailableBooks()));
         addButton("Alla böcker", () -> userinterface.createTable(bookService.getAllBooks()));
         addButton("Lägg till bok", () -> userinterface.createInputWindow(new AddBokForm(bookService)));
-        addButton("Redigera bok", () -> userinterface.createInputWindow(new UpdateBookForm(bookService, userinterface)));
+        addButton("Redigera bok", () -> {
+            try{
+                userinterface.createInputWindow(new UpdateBookForm(bookService, userinterface));
+
+            }catch (IllegalStateException ex) {
+                System.out.println("book är null");
+            }
+        });
         addButton("Radera bok", () -> userinterface.createInputWindow(new RemoveBookForm(bookService, userinterface)));
         textField = new JTextField("Sök bok...",20);
         //appenchild till Jpanel panel som är ett attribut kopplat till ui.MenuBar
@@ -36,7 +43,13 @@ public class BookMenu extends MenuBar {
         addButton("X", () -> userinterface.clearTable());
         addButton("Alla författare", () -> userinterface.createTable(bookService.getAllAuthors()));
         addButton("Lägg till författare", () -> userinterface.createInputWindow(new AddAuthorForm(bookService)));
-        addButton("Redigera författare", () -> userinterface.createInputWindow(new UpdateAuthorForm(bookService, userinterface)));
+        addButton("Redigera författare", () -> {
+            try{
+                userinterface.createInputWindow(new UpdateAuthorForm(bookService, userinterface));
+            }catch (IllegalStateException ex){
+                System.out.println("author är null");
+            }
+        });
 
     }
 }

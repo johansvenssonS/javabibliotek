@@ -23,6 +23,10 @@ public class UpdateBookForm implements InputForm{
         this.bookService = bookService;
         this.userinterface = userinterface;
         this.book = userinterface.selectedBook();
+
+        if(this.book == null){
+            throw new IllegalStateException("Ingen bok är markerad");
+        }
     }
 
     @Override
