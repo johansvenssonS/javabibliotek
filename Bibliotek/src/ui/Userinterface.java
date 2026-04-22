@@ -29,12 +29,17 @@ public class Userinterface {
     private boolean isLoggedIn ;
     private int userId;
 
-    public Userinterface(){
+    public Userinterface() {
         //Skapa instans av service lager, db-koppling
         isLoggedIn = false;
         bookService = new BookService();
         loanService = new LoanService();
         memberService = new MemberService();
+        init();
+
+    }
+
+    private void init(){
         // Skapa login form,om formuläret returnerar true, skapa program.
         if(createLoginWindow()){
             //skapa programfönster med titel.
@@ -61,9 +66,18 @@ public class Userinterface {
         topPanel = new JPanel();
         //Boxlayout som stapplar vertikalt i y-led
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        JButton logoutBtn = new JButton("Logga ut");
+        logoutBtn.addActionListener(e ->{
+            userId = 0;
+            isLoggedIn = false;
+            frame.dispose();
+            init();
+        });
+        topPanel.add(logoutBtn);
         topPanel.add(bookMenu.getPanel());
         topPanel.add((loanMenu.getPanel()));
         topPanel.add((memberMenu.getPanel()));
+
     }
 
     public void rerender(){
