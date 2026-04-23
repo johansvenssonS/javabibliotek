@@ -40,6 +40,13 @@ public class Userinterface {
     }
 
     private void init(){
+
+        Font mainFont = new Font("Segoe UI", Font.PLAIN, 13);
+        UIManager.put("Button.font", mainFont);
+        UIManager.put("Label.font", mainFont);
+        UIManager.put("TextField.font", mainFont);
+        UIManager.put("Table.font", mainFont);
+
         // Skapa login form,om formuläret returnerar true, skapa program.
         if(createLoginWindow()){
             //skapa programfönster med titel.
@@ -66,17 +73,35 @@ public class Userinterface {
         topPanel = new JPanel();
         //Boxlayout som stapplar vertikalt i y-led
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+
+
+
         JButton logoutBtn = new JButton("Logga ut");
+        logoutBtn.setBackground(new Color(220,20 , 60)); // röd
+        logoutBtn.setForeground(Color.WHITE);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setBorderPainted(false);
+        logoutBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 12));
         logoutBtn.addActionListener(e ->{
             userId = 0;
             isLoggedIn = false;
             frame.dispose();
             init();
         });
-        topPanel.add(logoutBtn);
-        topPanel.add(bookMenu.getPanel());
+        //översta raden lägg ihop bookmeny med logout.
+        JPanel toprow = new JPanel();
+        toprow.setLayout(new BoxLayout(toprow, BoxLayout.X_AXIS));
+        toprow.add(bookMenu.getPanel());
+        toprow.add(Box.createHorizontalGlue());//tryck ut logout
+        toprow.add(logoutBtn);
+        toprow.setBackground(new Color(21,101,192));//samma som bookmeny
+
+
+        topPanel.add(toprow);
         topPanel.add((loanMenu.getPanel()));
         topPanel.add((memberMenu.getPanel()));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10,15,10,15));
 
     }
 
@@ -109,7 +134,17 @@ public class Userinterface {
             }
 
             table = new JTable(tableModel);
-            table.setBackground(Color.GRAY);
+            //style
+            table.setBackground(new Color(52, 73, 94));
+            table.setForeground(Color.WHITE);
+            table.setGridColor(new Color(44, 62, 80));
+            table.setRowHeight(28);
+            table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            table.getTableHeader().setBackground(new Color(44, 62, 80));
+            table.getTableHeader().setForeground(Color.WHITE);
+            table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+
             tabelParent = new JScrollPane(table);
             frame.add(tabelParent, BorderLayout.CENTER);
             rerender();
@@ -142,11 +177,22 @@ public class Userinterface {
 
         JDialog popUp = new JDialog((Frame) null , loginform.getTitle(), true);
         popUp.setSize(800, 800);
+        popUp.getContentPane().setBackground(new Color(44,62,80));
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBackground(new Color(44,62,80));
         content.add(loginform.buildForm());
 
+
         JButton submitBtn = new JButton("Logga in");
+        //style
+        submitBtn.setBackground(new Color(52, 152, 219));
+        submitBtn.setForeground(Color.WHITE);
+        submitBtn.setFocusPainted(false);
+        submitBtn.setBorderPainted(false);
+        submitBtn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        submitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitBtn.setMaximumSize(new Dimension(200, 40));
         submitBtn.addActionListener(e -> {
             int result = loginform.sendForm();
             if (result != 0){

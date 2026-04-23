@@ -1,6 +1,8 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.*;
+
 /// Menybar som ska återanvändas i book,loan,member osv
 public abstract class MenuBar {
     //Panel som menybaren ska va i.
@@ -16,6 +18,12 @@ public abstract class MenuBar {
     protected  JButton addButton(String btn_name, Runnable metod){
         JButton btn = new JButton(btn_name);
         btn.addActionListener(e -> metod.run());
+        btn.setBackground(new Color(52, 152, 219)); // blå
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
         panel.add(btn);
         // kan i framtiden vara bra att returnera om vi ska komma åt knappen.
         return btn;

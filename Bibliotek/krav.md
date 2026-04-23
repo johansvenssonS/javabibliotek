@@ -24,7 +24,6 @@
 - [x] Se en profilsida med info om lån
 - [X] Uppdatera sin info på profilsidan
 - [X] Fixa felhantering om medlem inte har ngt lån och öppnar mina sidor.
-- Fixa felhantering när man söker på böcker som de finns 1 av bara, J t.ex
 ---
 
 ## 🏛️ Bibliotekarie — Obligatoriska krav
@@ -37,8 +36,6 @@
 - [X] Lägga till författare
 - [x] Redigera författare
 - [X] Lägga böcker i kategorier
-
-- Fixa felhantering om man klickar på redigera bok men tabellen inte har kommit än
 ---
 
 ## ⭐ Frivilliga krav — välj minst 6–7
@@ -52,8 +49,7 @@
 - [ ] Lämna recensioner efter läst bok
 - [ ] Reservera en bok
 - [X] Ändra medlemskapsstatus
-- Om man inte är aktiv kan man bli aktiv dvs
-- [ ] Logga in och ut
+- [x] Logga in och ut
 - [ ] Se statistik över mest utlånade böcker
 
 ### 🏛️ Bibliotekarie
